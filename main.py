@@ -60,13 +60,20 @@ def classify(data):
     fare = data['Fare']
     sib = data['SibSp']
     cl = data['Pclass']
+    emb = data['Embarked']
 
     for i in range(0, size):
         survived = 0
         if sex[i] == 'female':
-            survived = 1
+            if cl[i] < 3:
+                survived = 1
+            elif fare[i] < 23:
+                if emb[i] != 'S':
+                    survived = 1
+                elif 11 < fare[i] <= 18:
+                    survived = 1
         else:  # male
-            if age[i] < 13 and sib[i] < 3:
+            if age[i] < 12 and sib[i] < 3:
                 survived = 1
         results.append(survived)
     return results
